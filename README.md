@@ -1,6 +1,6 @@
-# Cloudflare AI Gateway + MiniMax Custom Provider
+# Cloudflare AI Gateway Provider & Agent Bridges
 
-> **Use any AI provider behind Cloudflare's AI Gateway** — get caching, rate limiting, observability, and unified billing on top of MiniMax (or any OpenAI-compatible API).
+> **Use Cloudflare AI Gateway as the shared front door for AI providers and coding agents** — custom providers, BYOK keys, `/compat` routing, caching, rate limiting, observability, and agent integrations.
 
 [![Cloudflare](https://img.shields.io/badge/Cloudflare-AI%20Gateway-orange)](https://developers.cloudflare.com/ai-gateway/)
 [![MiniMax](https://img.shields.io/badge/MiniMax-API-blue)](https://www.minimaxi.com/developers)
@@ -8,9 +8,9 @@
 
 ## What This Repo Covers
 
-This repo documents the full setup and integration of **MiniMax** as a custom provider in **Cloudflare AI Gateway**, including:
+This repo started as a MiniMax custom-provider guide. It now documents the broader pattern for putting providers and agent tools behind **Cloudflare AI Gateway**, including:
 
-- ✅ Adding a custom provider (MiniMax) via the Cloudflare Dashboard
+- ✅ Adding custom providers, using MiniMax as the worked example
 - ✅ Extending the same pattern to CrofAI and Vertex AI through Cloudflare `/compat`
 - ✅ Agent bridges for OpenCode, OpenClaw, and LiteLLM
 - ✅ Routing: Unified API (`/compat`) vs Provider-native endpoints
@@ -37,29 +37,28 @@ This repo documents the full setup and integration of **MiniMax** as a custom pr
 │  └──────────┘  └──────────┘  └──────────┘  └───────────┘  │
 │                                                              │
 │  ┌─────────────────────────────────────────────────────┐    │
-│  │              Custom Provider: MiniMax               │    │
-│  │              (via Provider Key — BYOK)             │    │
+│  │       Provider Keys + Custom Providers (BYOK)       │    │
 │  └─────────────────────────────────────────────────────┘    │
 └──────────────────────────┬──────────────────────────────────┘
                            │ HTTPS
                            ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                    MiniMax API                               │
-│           (Chat, T2A, Image Gen, Video, Music)              │
+│          MiniMax, CrofAI, Vertex AI, and others              │
+│      (chat, coding models, TTS, image gen, provider APIs)   │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ## Quick Start
 
-### 1. Add MiniMax as a Custom Provider
+### 1. Add a Custom Provider
 
 1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com/) → **AI** → **AI Gateway**
 2. Select your gateway → **Settings** → **Provider Keys** → **Add Key**
-3. Provider: `Custom`, Name: `minimax` (or any slug)
-4. Paste your MiniMax API key
+3. Provider: `Custom`, Name: `minimax`, `crofai`, or your own provider slug
+4. Paste the upstream provider API key
 5. Save
 
-### 2. Configure the Provider
+### 2. Configure the Provider Example
 
 In the same gateway settings, add the custom provider:
 
@@ -71,6 +70,8 @@ In the same gateway settings, add the custom provider:
 
 > **Important:** keep the MiniMax API key in Cloudflare BYOK. Application requests authenticate to Cloudflare with `cf-aig-authorization`; do not send your MiniMax key from the app.
 > The custom provider `base_url` should be the API root. Include `/anthropic/...` or `/v1/...` in the gateway request path.
+
+For CrofAI, use the same custom-provider pattern with `base_url: https://crof.ai/v1` and route OpenAI-compatible requests through `/compat` as `custom-crofai/<model>`.
 
 ### 3. Make Your First Request
 
@@ -161,8 +162,8 @@ headers = {
 | [ROUTING.md](ROUTING.md) | Unified API vs Provider-native, dynamic routing |
 | [AGENT_BRIDGES.md](AGENT_BRIDGES.md) | CrofAI, Vertex AI, LiteLLM, OpenClaw, and OpenCode bridge patterns |
 | [CACHING.md](CACHING.md) | Deep dive: headers, TTL, keys, broadcast patterns |
-| [ENDPOINTS.md](ENDPOINTS.md) | All tested MiniMax endpoints with example requests |
-| [INTEGRATION.md](INTEGRATION.md) | AI agent integration patterns |
+| [ENDPOINTS.md](ENDPOINTS.md) | Tested MiniMax endpoint examples |
+| [INTEGRATION.md](INTEGRATION.md) | AI agent integration patterns using MiniMax as the worked example |
 | [TESTING.md](TESTING.md) | Raw test data, methodology, latency benchmarks |
 | [TTS.md](TTS.md) | Text-to-Speech via AI Gateway — HTTP works, WebSocket streaming not supported |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | System diagrams and data flow |
@@ -175,9 +176,9 @@ headers = {
 |--------|-------------|------------|
 | AI Gateway proxy | `cf-aig-authorization: Bearer` | `cfut_...` (Runtime) |
 | Cloudflare REST API | `Authorization: Bearer` | `cfat_...` (Management) |
-| MiniMax upstream | Stored in Cloudflare BYOK | MiniMax API key |
+| Upstream provider | Stored in Cloudflare BYOK | Provider API key |
 
-> ⚠️ Runtime requests to AI Gateway use `cf-aig-authorization`. `Authorization` is reserved for Cloudflare management API calls, and the MiniMax provider key should be stored in Cloudflare BYOK.
+> ⚠️ Runtime requests to AI Gateway use `cf-aig-authorization`. `Authorization` is reserved for Cloudflare management API calls, and upstream provider keys should be stored in Cloudflare BYOK.
 
 ## Environment Variables
 

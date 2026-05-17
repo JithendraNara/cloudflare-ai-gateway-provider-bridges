@@ -1,8 +1,8 @@
-# Provider Setup: Adding MiniMax to AI Gateway
+# Provider Setup: Custom Providers in AI Gateway
 
 ## Overview
 
-Cloudflare AI Gateway supports custom providers via BYOK (Bring Your Own Keys). This guide walks through adding MiniMax as a custom provider.
+Cloudflare AI Gateway supports custom providers via BYOK (Bring Your Own Keys). This guide uses MiniMax as the worked example, and the same pattern applies to OpenAI-compatible custom providers such as CrofAI.
 
 ## Prerequisites
 

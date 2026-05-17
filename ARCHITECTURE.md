@@ -1,4 +1,4 @@
-# Architecture — Cloudflare AI Gateway + MiniMax
+# Architecture — Cloudflare AI Gateway Provider Bridges
 
 ## System Overview
 
@@ -13,23 +13,23 @@
                     │                   │                    │
                     ▼                   ▼                    │
          ┌──────────────────┐  ┌─────────────────┐         │
-         │   MiniMax Direct  │  │  AI Gateway     │         │
-         │   (Voice/TTS)     │  │  (Chat, Cache)  │         │
+         │ Provider Direct   │  │  AI Gateway     │         │
+         │ (optional escape) │  │  (Chat, Cache)  │         │
          └──────────────────┘  └────────┬────────┘         │
                                         │                   │
                     ┌───────────────────┴───────────────────┐
                     │                                       │
                     ▼                                       ▼
          ┌──────────────────┐                   ┌─────────────────────┐
-         │   MiniMax API    │                   │ Cloudflare Network   │
+         │ Provider API     │                   │ Cloudflare Network   │
          │                  │                   │ (Edge Caching,       │
-         │  api.minimax.io  │                   │  Rate Limiting,      │
-         │  /anthropic/...  │                   │  Analytics)          │
+         │ MiniMax/CrofAI/  │                   │  Rate Limiting,      │
+         │ Vertex/etc.      │                   │  Analytics)          │
          └──────────────────┘                   └──────────┬──────────┘
                                                             │
                                         ┌───────────────────┴───────────┐
-                                        │          Custom Provider         │
-                                        │          (MiniMax via BYOK)     │
+                                        │       BYOK Provider Keys         │
+                                        │   Custom + native providers      │
                                         └───────────────────┬───────────┘
                                                             │
                                     ┌─────────────────────────┴─────────────┐
@@ -71,9 +71,10 @@ Cloudflare Edge (AI Gateway)
 ## Directory Structure
 
 ```
-cf-aigateway-minimax/
+cloudflare-ai-gateway-provider-bridges/
 ├── README.md              # Overview & quick start
-├── PROVIDER_SETUP.md      # Adding MiniMax as custom provider
+├── PROVIDER_SETUP.md      # Adding MiniMax as a custom-provider example
+├── AGENT_BRIDGES.md       # CrofAI, Vertex AI, LiteLLM, OpenClaw, OpenCode
 ├── ROUTING.md             # Unified API vs provider-native routing
 ├── CACHING.md             # Deep dive on caching behavior
 ├── ENDPOINTS.md           # All tested endpoints with examples

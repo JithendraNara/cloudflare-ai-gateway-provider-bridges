@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document shows generic patterns for integrating Cloudflare AI Gateway with MiniMax in any AI agent or application.
+This document shows generic patterns for integrating Cloudflare AI Gateway with AI agents and applications. MiniMax is the worked example for provider-native endpoints; see [AGENT_BRIDGES.md](AGENT_BRIDGES.md) for CrofAI, Vertex AI, LiteLLM, OpenClaw, and OpenCode.
 
 ## Common Architecture
 
