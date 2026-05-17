@@ -11,6 +11,8 @@
 This repo documents the full setup and integration of **MiniMax** as a custom provider in **Cloudflare AI Gateway**, including:
 
 - ✅ Adding a custom provider (MiniMax) via the Cloudflare Dashboard
+- ✅ Extending the same pattern to CrofAI and Vertex AI through Cloudflare `/compat`
+- ✅ Agent bridges for OpenCode, OpenClaw, and LiteLLM
 - ✅ Routing: Unified API (`/compat`) vs Provider-native endpoints
 - ✅ Caching: Per-request headers, cache key strategies, broadcast optimization
 - ✅ Observability: Analytics, logging, cost tracking
@@ -157,6 +159,7 @@ headers = {
 |----------|---------------|
 | [PROVIDER_SETUP.md](PROVIDER_SETUP.md) | Step-by-step custom provider configuration |
 | [ROUTING.md](ROUTING.md) | Unified API vs Provider-native, dynamic routing |
+| [AGENT_BRIDGES.md](AGENT_BRIDGES.md) | CrofAI, Vertex AI, LiteLLM, OpenClaw, and OpenCode bridge patterns |
 | [CACHING.md](CACHING.md) | Deep dive: headers, TTL, keys, broadcast patterns |
 | [ENDPOINTS.md](ENDPOINTS.md) | All tested MiniMax endpoints with example requests |
 | [INTEGRATION.md](INTEGRATION.md) | AI agent integration patterns |
@@ -191,8 +194,10 @@ This guide is based on and expands the official Cloudflare AI Gateway documentat
 
 - [Cloudflare AI Gateway Docs](https://developers.cloudflare.com/ai-gateway/) — Official documentation
 - [Cloudflare AI Gateway API](https://developers.cloudflare.com/api/resources/ai-gateway/) — REST API reference
-- [Custom Provider Setup](https://developers.cloudflare.com/ai-gateway/providers/) — Adding third-party providers
-- [Caching in AI Gateway](https://developers.cloudflare.com/ai-gateway/caching/) — Official caching docs
+- [Custom Providers](https://developers.cloudflare.com/ai-gateway/configuration/custom-providers/) — Adding third-party providers
+- [BYOK Provider Keys](https://developers.cloudflare.com/ai-gateway/configuration/bring-your-own-keys/) — Stored provider keys
+- [Authenticated Gateway](https://developers.cloudflare.com/ai-gateway/configuration/authentication/) — Runtime gateway auth
+- [Caching in AI Gateway](https://developers.cloudflare.com/ai-gateway/features/caching/) — Official caching docs
 - [MiniMax API Docs](https://www.minimaxi.com/developers) — MiniMax API reference
 
 ## License
