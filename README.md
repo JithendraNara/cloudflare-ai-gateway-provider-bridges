@@ -161,6 +161,7 @@ headers = {
 | [PROVIDER_SETUP.md](PROVIDER_SETUP.md) | Step-by-step custom provider configuration |
 | [ROUTING.md](ROUTING.md) | Unified API vs Provider-native, dynamic routing |
 | [AGENT_BRIDGES.md](AGENT_BRIDGES.md) | CrofAI, Vertex AI, LiteLLM, OpenClaw, and OpenCode bridge patterns |
+| [OPENCLAW.md](OPENCLAW.md) | OpenClaw-specific Cloudflare provider setup and validation |
 | [CACHING.md](CACHING.md) | Deep dive: headers, TTL, keys, broadcast patterns |
 | [ENDPOINTS.md](ENDPOINTS.md) | Tested MiniMax endpoint examples |
 | [INTEGRATION.md](INTEGRATION.md) | AI agent integration patterns using MiniMax as the worked example |

@@ -161,6 +161,8 @@ Keep secrets out of the YAML. If your process manager can template headers from 
 
 ## OpenClaw
 
+See [OPENCLAW.md](OPENCLAW.md) for the dedicated OpenClaw setup guide, validation commands, LiteLLM decision points, and troubleshooting.
+
 OpenClaw has an official `cloudflare-ai-gateway` provider path for Anthropic through Cloudflare. For CrofAI or Vertex through Cloudflare `/compat`, use an OpenClaw custom provider with `api: "openai-completions"`.
 
 Minimal config shape:
